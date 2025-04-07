@@ -1,4 +1,4 @@
-# Rendszerterv – Pizzázó rendeléskészítő alkalmazás
+# Rendszerterv
 
 ## 1. A rendszer célja
 
