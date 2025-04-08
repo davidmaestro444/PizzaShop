@@ -100,3 +100,62 @@ Adatkezelés: Az alkalmazás a rendeléseket és felhasználói adatokat lokáli
 ### Fejlesztő eszközök
  - IntelliJ IDEA
  - XAMPP (MySQL)
+
+## 7. Architekturális terv
+
+### Adatbázis rendszer
+
+- MySQL alapú adatbázis.
+
+### A program elérése, kezelése
+
+- XAMPP, aminek a telepítése után elérhető a MySQL alapú adatbázis.
+
+## 8. Adatbázis terv
+
+![dbterv](db_plan.png)
+
+## 9. Implementációs terv
+A frontend JavaFX segítségével készül, míg a backend Java keretrendszerben.
+
+A XAMPP szerver felelős az adatbázis futásáért, ezután egy adatbázis összekötő csomaggal érhetőek el az adatok a programon belül.  
+
+A frontend és backend fejlesztési is IntelliJ környezetben történik.
+
+## 10. Tesztterv
+
+A tesztelés célja, hogy a rendszer és annak komponensei megfelelően működjenek.
+A tesztelést a csapat minden tagja elvégzi. Ezeket az eredményeket a tagok dokumentálják. 
+A tesztelés módja a unit teszt. A tesztelés során figyeljük, hogy a szoftver megfelelően működik-e.
+Abban az esetben, ha számunkra megfelelő eredményt kaptunk, akkor a teszt sikeres. Ellenkező esetben sikertelen
+és javításra szorul a hibás kódrész.
+
+### Tesztesetek
+
+#### Tesztelés módja: Unit Teszt
+
+ | Teszteset            | Elvárt eredmény                                                                                            | 
+ |----------------------|------------------------------------------------------------------------------------------------------------| 
+ | Regisztráció         | A felhasználó az adatok megadásával sikeresen regisztrálni tud.                                            |
+ | Bejelentkezés        | A felhasználó az adatok megadásával sikeresen be tud jelentkezni.                                          |
+ | Pizza kiválasztás    | Az elérhető pizzák közül tud választani a felhasználó.                                                     |
+ | Feltét kiválasztása  | Egy adott pizzához tartozó extra feltétek kiválasztása.                                                    |
+ | Fizetési mód         | A felhasználó a rendelés leadásakor tud előre megadott fizetési módok közül választani.                    |
+ | Rendelés állapota    | A felhasználó nyomon tudja követni a leadott rendelését.                                                   |
+
+## 11. Telepítési terv
+
+**Fizikai telepítési terv**:
+ - A felhasználónak szüksége van egy számítógépre.
+ - A program működéséhez szükség van egy szerverre, jelen esetben XAMPP MySQL szerverre.
+
+**Szoftver telepítési terv**:
+ - A felhasználónak szüksége van egy Windows 10 vagy 11 operációs rendszerrel rendelkező számítógépre, amin futtatható Java alkalmazás.
+ - A szoftver működéséhez szükség van egy MySQL szerverre:
+   - A szervert a XAMPP fogja biztosítani.
+ - Az alkalmazás (frontend, backend) beállításához IntelliJ fejlesztői környezetre van szükség
+ - A megfelelő konfigurálás esetén a program futtatható és a felhasználó számára elérhető állapotban van.
+
+## 12. Karbantartási terv
+*	Az alkalmazáson keresztül nem érhetőek el más felhasználók személyes adatai, csakis a bejelentkezett felhasználó adatai.
+* A felhasználók által érkezett bármilyen jellegű hiba mihamarabbi javításra kerül.
