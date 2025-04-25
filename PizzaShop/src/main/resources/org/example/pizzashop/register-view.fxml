@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.pizzashop.controllers.RegisterController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <Label text="Regisztráció" layoutX="250" layoutY="30"/>
+
+    <TextField fx:id="usernameField" promptText="Felhasználónév" layoutX="200" layoutY="80" prefWidth="200"/>
+    <PasswordField fx:id="passwordField" promptText="Jelszó" layoutX="200" layoutY="130" prefWidth="200"/>
+    <TextField fx:id="emailField" promptText="Email" layoutX="200" layoutY="180" prefWidth="200"/>
+
+    <Button text="Regisztráció" layoutX="250" layoutY="230" onAction="#handleRegister"/>
+    <Button text="Vissza" layoutX="250" layoutY="270" onAction="#goToLogin"/>
+</AnchorPane>
