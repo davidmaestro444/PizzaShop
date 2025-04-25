@@ -8,7 +8,15 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.pizzashop.controllers.FormController"
+            fx:controller="org.example.pizzashop.controllers.LoginController"
             prefHeight="400.0" prefWidth="600.0">
+
+    <Label text="Bejelentkezés" layoutX="250" layoutY="30"/>
+
+    <TextField fx:id="usernameField" promptText="Felhasználónév" layoutX="200" layoutY="100" prefWidth="200"/>
+    <PasswordField fx:id="passwordField" promptText="Jelszó" layoutX="200" layoutY="150" prefWidth="200"/>
+
+    <Button text="Bejelentkezés" layoutX="250" layoutY="200" onAction="#handleLogin"/>
+    <Button text="Regisztráció" layoutX="250" layoutY="240" onAction="#goToRegister"/>
 
 </AnchorPane>
