@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import org.example.pizzashop.dbConnection.DatabaseConnection;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Main extends Application {
     private DatabaseConnection connection;
@@ -19,7 +20,12 @@ public class Main extends Application {
         String username = "root";
         String password = "";
 
-        connection = new DatabaseConnection(url, username, password);
+        try{
+            connection = new DatabaseConnection(url, username, password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
         Scene scene = new Scene(root);
         primaryStage.setTitle("PizzaShop alkalmazás");
@@ -30,7 +36,12 @@ public class Main extends Application {
     @Override
     public void stop() {
         if (connection != null) {
-            connection.closeConnection();
+            try {
+                connection.closeConnection();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 
