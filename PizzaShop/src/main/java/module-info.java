@@ -9,4 +9,7 @@ module org.example.pizzashop {
     exports org.example.pizzashop;
     exports org.example.pizzashop.controllers;
     opens org.example.pizzashop.controllers to javafx.fxml;
+    exports org.example.pizzashop.dbConnection;
+    exports org.example.pizzashop.utils;
+    opens org.example.pizzashop.utils to javafx.fxml;
 }

@@ -16,6 +16,7 @@ import org.example.pizzashop.dbConnection.DatabaseConnection;
 import org.example.pizzashop.model.User;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class LoginController {
 
@@ -25,7 +26,16 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
-    private final DatabaseConnection dbConnection = new DatabaseConnection("jdbc:mysql://localhost:3306/pizzaShop", "root", "");
+    private final DatabaseConnection dbConnection;
+
+    {
+        try {
+            dbConnection = new DatabaseConnection("jdbc:mysql://localhost:3306/pizzaShop", "root", "");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private final Connection connection = dbConnection.getDbConnection();
     private final UserDAO userDAO = new UserDAO(connection);
 
