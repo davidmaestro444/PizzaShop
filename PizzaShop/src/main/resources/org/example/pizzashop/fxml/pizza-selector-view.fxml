@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.pizzashop.controllers.PizzaSelectorController"
+            minHeight="450" minWidth="690"
+            maxHeight="450" maxWidth="690">
+
+    <BorderPane>
+        <top>
+            <HBox spacing="20" style="-fx-background-color: #f8f8f8; -fx-padding: 10;">
+                <Button text="Kosár megtekintése"
+                        style="-fx-font-weight: bold; -fx-font-size: 14;"
+                        onAction="#showCart">
+                    <graphic>
+                        <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+                            <Image url="@../images/cart.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Label fx:id="cartItemCount" text="0 tétel"
+                       style="-fx-font-size: 14; -fx-text-fill: #e74c3c; -fx-font-weight: bold;"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Button text="Rendeléseim"
+                        style="-fx-font-weight: bold; -fx-font-size: 14;"
+                        onAction="#showOrders">
+                    <graphic>
+                        <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+                            <Image url="@../images/order.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+        </top>
+
+        <center>
+            <ScrollPane fitToWidth="true"
+                        hbarPolicy="NEVER"
+                        pannable="true"
+                        prefViewportHeight="400"
+                        prefViewportWidth="670">
+                <VBox fx:id="contentBox" spacing="10">
+                    <GridPane fx:id="pizzaGrid" hgap="10" vgap="10">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                    </GridPane>
+                </VBox>
+            </ScrollPane>
+        </center>
+    </BorderPane>
+</AnchorPane>

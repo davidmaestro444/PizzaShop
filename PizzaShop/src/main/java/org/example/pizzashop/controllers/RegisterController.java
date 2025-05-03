@@ -67,7 +67,7 @@ public class RegisterController {
     @FXML
     public void goToLogin(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/org/example/pizzashop/login-view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/org/example/pizzashop/fxml/login-view.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Bejelentkezés");
