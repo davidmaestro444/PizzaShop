@@ -14,7 +14,7 @@ public class Main extends Application {
     private DatabaseConnection connection;
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/pizzashop/main-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/pizzashop/fxml/main-view.fxml"));
         Parent root = loader.load();
         String url = "jdbc:mysql://localhost:3306/pizzaShop";
         String username = "root";

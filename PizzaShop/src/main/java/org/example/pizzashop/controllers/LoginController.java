@@ -50,7 +50,7 @@ public class LoginController {
             showAlert("Sikeres bejelentkezés!", Alert.AlertType.INFORMATION);
 
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/org/example/pizzashop/main-view.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/org/example/pizzashop/fxml/pizza-selector-view.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("PizzaShop - Főoldal");
@@ -75,7 +75,7 @@ public class LoginController {
     @FXML
     public void goToRegister(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/org/example/pizzashop/register-view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/org/example/pizzashop/fxml/register-view.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Regisztráció");
