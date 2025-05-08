@@ -1,23 +1,30 @@
 package org.example.pizzashop.controllers;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import org.example.pizzashop.dbConnection.DatabaseConnection;
-import java.sql.*;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.example.pizzashop.model.*;
 
 public class PizzaSelectorController {
     public VBox contentBox;
     public Label cartItemCount;
+    public List<Pizza> order;
     @FXML
     private GridPane pizzaGrid;
 
@@ -30,39 +37,13 @@ public class PizzaSelectorController {
     public void initialize() {
         loadPizzasFromDatabase();
         updateCartCount(0);
+        order = new ArrayList<>();
     }
 
     private void loadPizzasFromDatabase() {
-        List<Pizza> pizzas = fetchPizzasFromDB();
+        PizzaRepository repository = new PizzaRepository();
+        List<Pizza> pizzas = new ArrayList<>(repository.getAllAvailablePizzas());
         displayPizzaCards(pizzas);
-    }
-
-    private List<Pizza> fetchPizzasFromDB() {
-        List<Pizza> pizzas = new ArrayList<>();
-        String query = "SELECT name, description, price FROM pizzas";
-        DatabaseConnection db;
-        try {
-            db = new DatabaseConnection("jdbc:mysql://localhost:3306/pizzaShop", "root", "");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        try (Connection conn = db.getDbConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                Pizza pizza = new Pizza(
-                        rs.getString("name"),
-                        rs.getString("description"),
-                        rs.getInt("price")
-                );
-                pizzas.add(pizza);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return pizzas;
     }
 
     private void displayPizzaCards(List<Pizza> pizzas) {
@@ -110,11 +91,29 @@ public class PizzaSelectorController {
     }
 
     private void addToCart(Pizza pizza) {
-        System.out.println("Kosárba téve: " + pizza.getName());
+        order.add(pizza);
+        updateCartCount(order.size());
     }
 
     @FXML
     public void showCart(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/pizzashop/fxml/cart-view.fxml"));
+            Parent root = loader.load();
+
+            CartController cartController = loader.getController();
+
+            cartController.setPizzas(order);
+
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("PizzaShop - Kosár");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Nem sikerült betölteni a kosár tartalmát");
+            alert.show();
+        }
     }
 
     @FXML
@@ -125,20 +124,7 @@ public class PizzaSelectorController {
         cartItemCount.setText(count + " tétel");
     }
 
+    public void setOrder(List<Pizza> pizzas, List<Topping> toppings) {
 
-    private static class Pizza {
-        private final String name;
-        private final String description;
-        private final int price;
-
-        public Pizza(String name, String description, int price) {
-            this.name = name;
-            this.description = description;
-            this.price = price;
-        }
-
-        public String getName() { return name; }
-        public String getDescription() { return description; }
-        public int getPrice() { return price; }
     }
 }

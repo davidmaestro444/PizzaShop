@@ -13,4 +13,6 @@ module org.example.pizzashop {
     exports org.example.pizzashop.utils;
     exports org.example.pizzashop;
     exports org.example.pizzashop.controllers;
+    exports org.example.pizzashop.model;
+    opens org.example.pizzashop.model to javafx.fxml;
 }
