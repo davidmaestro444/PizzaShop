@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CartItem {
-    private final Pizza pizza;
-    private final ObservableList<Topping> toppings = FXCollections.observableArrayList();
+    private Pizza pizza;
+    private ObservableList<Topping> toppings = FXCollections.observableArrayList();
 
     public CartItem(Pizza pizza) {
         this.pizza = pizza;

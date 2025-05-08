@@ -18,6 +18,7 @@ import org.example.pizzashop.model.PizzaRepository;
 import org.example.pizzashop.model.Topping;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -140,29 +141,50 @@ public class CartController {
         // Fizetés logika
     }
 
-    public void setPizzas(List<Pizza> pizzas) {
+    public void setPizzas(List<CartItem> pizzas) {
         cartItems.clear();
-        pizzas.forEach(pizza -> cartItems.add(new CartItem(pizza)));
+        cartItems.addAll(pizzas);
         updateTotalLabel();
     }
 
    public void goBack(ActionEvent actionEvent) {
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/pizzashop/fxml/pizza-selector-view.fxml"));
-            Parent parent = loader.load();
+       try {
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/pizzashop/fxml/pizza-selector-view.fxml"));
+           Parent parent = loader.load();
 
-            PizzaSelectorController pizzaSelectorController = loader.getController();
-            pizzaSelectorController.setOrder(cartItems.stream()
-                            .map(CartItem::getPizza)
-                            .collect(Collectors.toList()),
-                    toppingsComboBox.getItems());
+           PizzaSelectorController pizzaSelectorController = loader.getController();
+           pizzaSelectorController.setOrder(new ArrayList<>(cartItems), toppingsComboBox.getItems());
 
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+           Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+           stage.setScene(new Scene(parent));
+           stage.show();
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+    }
 
-            stage.setScene(new Scene(parent));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void deletePizza(ActionEvent actionEvent) {
+        CartItem selectedItem = cartTable.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            cartItems.remove(selectedItem);
+            cartTable.refresh();
+            updateTotalLabel();
         }
+    }
+
+    public void deleteAllTopping(ActionEvent actionEvent) {
+        CartItem selectedItem = cartTable.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            selectedItem.getToppings().clear();
+            cartTable.refresh();
+            updateTotalLabel();
+        }
+    }
+
+    public void deleteCart(ActionEvent actionEvent) {
+        cartItems.clear();
+        updateTotalLabel();
     }
 }
