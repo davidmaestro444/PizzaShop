@@ -48,10 +48,13 @@
             </columnResizePolicy>
         </TableView>
         <Button text="Kiválasztott pizza törlése"
+                onAction="#deletePizza"
                 style="-fx-font-size: 14px; -fx-background-color: #e0e0e0;"/>
         <Button text="Kiválasztott pizza összes feltétének törlése"
+                onAction="#deleteAllTopping"
                 style="-fx-font-size: 14px; -fx-background-color: #e0e0e0;"/>
         <Button text="Kosár ürítése"
+                onAction="#deleteCart"
                 style="-fx-font-size: 14px; -fx-background-color: #e0e0e0;"/>
 
         <HBox spacing="10" alignment="CENTER_LEFT">

@@ -1,6 +1,5 @@
 package org.example.pizzashop.controllers;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +23,9 @@ import org.example.pizzashop.model.*;
 public class PizzaSelectorController {
     public VBox contentBox;
     public Label cartItemCount;
-    public List<Pizza> order;
+    public List<CartItem> order;
+    private List<Topping> availableToppings;
+
     @FXML
     private GridPane pizzaGrid;
 
@@ -91,7 +92,7 @@ public class PizzaSelectorController {
     }
 
     private void addToCart(Pizza pizza) {
-        order.add(pizza);
+        order.add(new CartItem(pizza));
         updateCartCount(order.size());
     }
 
@@ -124,7 +125,9 @@ public class PizzaSelectorController {
         cartItemCount.setText(count + " tétel");
     }
 
-    public void setOrder(List<Pizza> pizzas, List<Topping> toppings) {
-
+    public void setOrder(List<CartItem> cart, List<Topping> toppings) {
+        this.order = new ArrayList<>(cart);
+        this.availableToppings = toppings;
+        updateCartCount(order.size());
     }
 }
