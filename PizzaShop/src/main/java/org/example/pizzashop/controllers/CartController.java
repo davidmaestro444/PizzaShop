@@ -25,7 +25,6 @@ public class CartController {
     @FXML private TableColumn<CartItem, Integer> priceColumn;
     @FXML private ComboBox<Topping> toppingsComboBox;
     @FXML private Label totalLabel;
-    @FXML private ComboBox<String> paymentMethodComboBox;
     @FXML private Button checkoutButton;
 
     private ObservableList<CartItem> cartItems = FXCollections.observableArrayList();
@@ -34,10 +33,6 @@ public class CartController {
 
     public void initialize() {
         pizzaRepository = new PizzaRepository();
-
-        paymentMethodComboBox.setItems(FXCollections.observableArrayList("Cash", "CreditCard"));
-        paymentMethodComboBox.getSelectionModel().selectFirst();
-
         try {
             pizzaNameColumn.setCellValueFactory(new PropertyValueFactory<>("pizzaName"));
             priceColumn.setCellValueFactory(cellData -> {
@@ -142,15 +137,20 @@ public class CartController {
 
     @FXML
     private void proceedToCheckout(ActionEvent event) {
-        String selectedPaymentMethod = paymentMethodComboBox.getSelectionModel().getSelectedItem();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/pizzashop/fxml/checkout-view.fxml"));
+            Parent root = loader.load();
 
-        if ("CreditCard".equals(selectedPaymentMethod)) {
-            paymentStrategy = new CreditCardPayment("1234-5678-9876-5432"); // Példa
-        } else if ("Cash".equals(selectedPaymentMethod)) {
-            paymentStrategy = new CashPayment();
+            CheckoutController controller = loader.getController();
+            controller.setOrder(cartItems);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Fizetés");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        paymentStrategy.pay(calculateTotal());
-        showConfirmationScreen(event);
     }
 
     private void showConfirmationScreen(ActionEvent event) {
