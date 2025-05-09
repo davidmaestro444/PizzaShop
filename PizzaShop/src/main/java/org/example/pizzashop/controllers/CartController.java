@@ -12,10 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.example.pizzashop.model.CartItem;
-import org.example.pizzashop.model.Pizza;
-import org.example.pizzashop.model.PizzaRepository;
-import org.example.pizzashop.model.Topping;
+import org.example.pizzashop.model.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,12 +25,19 @@ public class CartController {
     @FXML private TableColumn<CartItem, Integer> priceColumn;
     @FXML private ComboBox<Topping> toppingsComboBox;
     @FXML private Label totalLabel;
+    @FXML private ComboBox<String> paymentMethodComboBox;
+    @FXML private Button checkoutButton;
 
     private ObservableList<CartItem> cartItems = FXCollections.observableArrayList();
     private PizzaRepository pizzaRepository;
+    private PaymentStrategy paymentStrategy;
 
     public void initialize() {
         pizzaRepository = new PizzaRepository();
+
+        paymentMethodComboBox.setItems(FXCollections.observableArrayList("Cash", "CreditCard"));
+        paymentMethodComboBox.getSelectionModel().selectFirst();
+
         try {
             pizzaNameColumn.setCellValueFactory(new PropertyValueFactory<>("pizzaName"));
             priceColumn.setCellValueFactory(cellData -> {
@@ -138,7 +142,28 @@ public class CartController {
 
     @FXML
     private void proceedToCheckout(ActionEvent event) {
-        // Fizetés logika
+        String selectedPaymentMethod = paymentMethodComboBox.getSelectionModel().getSelectedItem();
+
+        if ("CreditCard".equals(selectedPaymentMethod)) {
+            paymentStrategy = new CreditCardPayment("1234-5678-9876-5432"); // Példa
+        } else if ("Cash".equals(selectedPaymentMethod)) {
+            paymentStrategy = new CashPayment();
+        }
+        paymentStrategy.pay(calculateTotal());
+        showConfirmationScreen(event);
+    }
+
+    private void showConfirmationScreen(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/pizzashop/fxml/orders-view.fxml")); //orders viewt megvalósítani
+            Parent parent = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(parent));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setPizzas(List<CartItem> pizzas) {
