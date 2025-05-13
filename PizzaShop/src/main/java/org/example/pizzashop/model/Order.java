@@ -1,18 +1,23 @@
 package org.example.pizzashop.model;
 
 public class Order {
+    private int id;
+    private String status;
 
-    private PaymentStrategy paymentStrategy;
-
-    public Order(PaymentStrategy paymentStrategy) {
-        this.paymentStrategy = paymentStrategy;
+    public Order(int id, String status) {
+        this.id = id;
+        this.status = status;
     }
 
-    public void setPaymentStrategy(PaymentStrategy paymentStrategy) {
-        this.paymentStrategy = paymentStrategy;
+    public int getId() {
+        return id;
     }
 
-    public void checkout(double amount) {
-        paymentStrategy.pay(amount);
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
