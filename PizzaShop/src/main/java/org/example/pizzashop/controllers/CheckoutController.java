@@ -19,6 +19,10 @@ public class CheckoutController {
     private List<CartItem> order;
     private PaymentStrategy paymentStrategy;
 
+    public PaymentStrategy getPaymentStrategy() {
+        return this.paymentStrategy;
+    }
+
     @FXML
     public void initialize() {
         paymentMethodComboBox.getItems().addAll("Bankkártya", "Készpénz");
@@ -61,7 +65,7 @@ public class CheckoutController {
         alert.show();
     }
 
-    private int calculateTotal() {
+    public int calculateTotal() {
         int total = 0;
         if (order != null) {
             for (CartItem item : order) {
